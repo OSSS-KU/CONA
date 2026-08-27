@@ -1,0 +1,24 @@
+# training artifacts
+checkpoints/
+logs/
+wandb/
+results/
+datasets/
+hostfile*
+NFS_SETUP*
+
+# Megatron dataset index cache (regenerated from data_cache_path)
+Megatron-DeepSpeed/index-cache/
+
+# benchmark outputs
+utils/adaptdl/benchmark_results*/
+
+# python
+__pycache__/
+*.pyc
+*.egg-info/
+
+# local config
+.conaconfig
+# the paper itself is not part of the artifact
+/*.pdf

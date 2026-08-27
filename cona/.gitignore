@@ -1,0 +1,19 @@
+# training artifacts
+checkpoints/
+logs/
+wandb/
+results/
+datasets/
+
+# generated at run time by gpt_backend.py
+config/deepspeed_config/
+
+# NFS barrier markers written by distributed_barrier.py
+.cona_multi_barrier/
+
+# python
+__pycache__/
+*.pyc
+
+# local config (copy the .example file and edit)
+.conaconfig

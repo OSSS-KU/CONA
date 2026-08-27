@@ -1,0 +1,45 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Release Helm
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+    - name: Build helm chart and update index
+      run: |
+        export ADAPTDL_VERSION=${GITHUB_REF#"refs/tags/v"}
+        mkdir -p helm/repo
+        helm repo add stable https://charts.helm.sh/stable
+        helm dependency update helm/adaptdl-sched
+        helm package helm/adaptdl-sched --destination . --version $ADAPTDL_VERSION --app-version $ADAPTDL_VERSION
+        git add adaptdl-sched-$ADAPTDL_VERSION.tgz
+        git stash
+    - uses: actions/checkout@master
+      with:
+        ref: helm-repo
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+    - name: Commit changes
+      run: |
+        export ADAPTDL_VERSION=${GITHUB_REF#"refs/tags/v"}
+        git stash apply
+        helm repo index .
+        git add index.yaml adaptdl-sched-$ADAPTDL_VERSION.tgz
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Update helm release $ADAPTDL_VERSION" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: helm-repo

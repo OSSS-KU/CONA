@@ -1,0 +1,90 @@
+{
+  "matrix": {
+    "float8": {
+      "tflops": 2000,
+      "gflops_efficiency": [
+        [128, 0.95],
+        [16, 0.9],
+        [1, 0.6],
+        [0, 0.1]
+      ]
+    },
+    "float16": {
+      "tflops": 1000,
+      "gflops_efficiency": [
+        [128, 0.95],
+        [16, 0.9],
+        [1, 0.6],
+        [0, 0.1]
+      ]
+    }
+  },
+  "vector": {
+    "float8": {
+      "tflops": 120,
+      "gflops_efficiency": [
+        [16, 0.95],
+        [1, 0.5],
+        [0, 0.1]
+      ]
+    },
+    "float16": {
+      "tflops": 120,
+      "gflops_efficiency": [
+        [16, 0.95],
+        [1, 0.5],
+        [0, 0.1]
+      ]
+    }
+  },
+  "mem1": {
+    "GiB": 80,
+    "GBps": 3072,
+    "MB_efficiency": [
+      [100, 0.90],
+      [10, 0.75],
+      [1, 0.6],
+      [0, 0.3]
+    ]
+  },
+  "mem2": {
+    "GiB": 512,
+    "GBps": 450,
+    "MB_efficiency": [
+      [100, 0.95],
+      [10, 0.9],
+      [1, 0.7],
+      [0, 0.3]
+    ]
+  },
+  "processing_mode": "no_overlap",
+  "networks": [
+    {
+      "bandwidth": 450,
+      "efficiency": 0.65,
+      "size": 8,
+      "latency": 0.00001,
+      "ops": {
+        "p2p": [1.0, null],
+        "reduce_scatter": [1.0, 0],
+        "all_gather": [1.0, 0],
+        "all_reduce": [1.0, 1]
+      },
+      "must_be_filled": true,
+      "processor_usage": 0.15
+    },{
+      "bandwidth": 50,
+      "efficiency": 0.9,
+      "size": 65536,
+      "latency": 0.00002,
+      "ops": {
+        "p2p": [1.0, null],
+        "reduce_scatter": [1.0, 0],
+        "all_gather": [1.0, 0],
+        "all_reduce": [1.0, 0]
+      },
+      "must_be_filled": false,
+      "processor_usage": 0.02
+    }
+  ]
+}

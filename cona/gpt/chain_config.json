@@ -1,0 +1,50 @@
+{
+  "steps": [
+    {
+      "step_num": 1,
+      "dp": 2,
+      "tp": 1,
+      "pp": 2,
+      "gbs": 8,
+      "mbs": 2,
+      "train_iters": 1034,
+      "is_initial": true,
+      "convert": true
+    },
+    {
+      "step_num": 2,
+      "dp": 4,
+      "tp": 1,
+      "pp": 1,
+      "gbs": 16,
+      "mbs": 4,
+      "extra_iters": 292,
+      "load_dp": 2,
+      "load_tp": 1,
+      "load_pp": 2,
+      "convert": true
+    },
+    {
+      "step_num": 3,
+      "dp": 4,
+      "tp": 1,
+      "pp": 1,
+      "gbs": 32,
+      "mbs": 4,
+      "target_iters": 5000,
+      "convert": false
+    }
+  ],
+  "pruning": [
+    {
+      "after_step": 2,
+      "ckpt_dir": "checkpoints/gpt3-xl-1.3b/z1/fp16/tp1_pp2_dp2_sp1",
+      "mode": "delete-all"
+    },
+    {
+      "after_step": 3,
+      "ckpt_dir": "checkpoints/gpt3-xl-1.3b/z1/fp16/tp1_pp1_dp4_sp1",
+      "mode": "keep-latest"
+    }
+  ]
+}
